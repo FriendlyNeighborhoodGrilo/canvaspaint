@@ -19,6 +19,7 @@
         document.addEventListener("DOMContentLoaded" , () =>{
             const canvas = document.querySelector("canvas");
             const canvasCtx = canvas.getContext("2d");
+            const clicking = false
 
             canvas.addEventListener("mousedown", (event) =>{
                 const canvasY = event.pagey - canvas.offsetTop;
@@ -26,20 +27,25 @@
                 
                 canvasCtx.beginPath();
                 canvasCtx.moveTo(canvasX, canvasY);
-                console.log( event.pageX, event.pageY);
-                console.log( canvas.offsetLeft , canvas.offsetTop)
+
+                clicking = true
+                
             });
 
             canvas.addEventListener("mousemove", (event) =>{
 
                 const canvasY = event.pagey - canvas.offsetTop;
                 const canvasX = event.pagex - canvas.offsetLeft; 
+                if(clicking){
+                    canvasCtx.lineTo(canvasX, canvasY);
+                    canvasCtx.stroke();
 
-                canvasCtx.lineTo(canvasX, canvasY);
-                canvasCtx.stroke();
+                }
             });
 
-            canvas.addEventListener("mouseup", (event) =>{});
+            canvas.addEventListener("mouseup", (event) =>{
+                clicking = false
+            });
 
             canvas.addEventListener("mouseout", (event) =>{});
 
